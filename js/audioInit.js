@@ -1,31 +1,33 @@
 var audioTP, audioTP1;
 
-function audioInit() {
+function audioInit($elbox, audioUrl) {
+	if(!audioUrl) {
+		return
+	}
+	$($elbox).html('');
 	var html = `<div class="myAudioLeft">
-					<img class="audioImg" src="./img/voice.png" />
-					<audio class="audio" src="./img/1.wav"></audio>
-				</div>
-				<div class="myAudioRight">
-					<span class="startTime">00:00</span>
-					<div class="rangeBox">
-						<div class="rangeRed">
-							<p class="range" id="range"></p>
-						</div>
+						<img class="audioImg" src="./img/voice.png" />
+						<audio class="audio" src="` + audioUrl + `"></audio>
 					</div>
-					<span class="endTime">00:00</span>
-				</div>`
-	$(".myAudio").each(function() {
-		$(this).html(html)
-	})
-	$(".myAudio .audio").each(function(audio, index, audios) {
-		console.log(this)
+					<div class="myAudioRight">
+						<span class="startTime">00:00</span>
+						<div class="rangeBox">
+							<div class="rangeRed">
+								<p class="range" id="range"></p>
+							</div>
+						</div>
+						<span class="endTime">00:00</span>
+					</div>`;
+	$($elbox).append(html);
+	$(".myAudio .myAudioLeft .audio").each(function(audio, index, audios) {
+		//		console.log(this) 
 		var $this = $(this)[0];
 		if($this != null) {
 			var duration = '00:00';
 			$this.load();
 			$this.oncanplay = function() {
 				var duration = timeChange($this.duration)
-				console.log(duration)
+				//				console.log(duration)
 				$($this).parents(".myAudio").find(".endTime").html(duration)
 			}
 		}
